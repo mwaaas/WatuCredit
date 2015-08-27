@@ -1,0 +1,48 @@
+{
+  "AWSEBDockerrunVersion": "2",
+  "Authentication": {
+    "Bucket": "mwaside",
+    "Key": ".dockercfg"
+  },
+   "volumes": [
+    {
+      "name": "ecs_instance_logs",
+      "host": {
+        "sourcePath": "/var/log"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "loggy",
+      "memory": 128,
+      "image": "sendgridlabs/loggly-docker",
+      "environment": [
+        {
+          "name": "TOKEN",
+          "value": "dddaaa51-f410-4d6e-ae03-3a7fe250e561"
+        },
+        {
+          "name":"TAG",
+          "value": "Docker"
+        }
+      ]
+    },
+    {
+      "name": "web",
+      "image": "{{name}}:{{version}}",
+      "links": [
+        "loggy"
+      ],
+      "essential": true,
+      "memory": 128,
+      "command": ["./app_server.sh"],
+        "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+nginx:
+  build: devops/nginx_container
+  links:
+    - web:web
+  volumes_from:
+    - web
+  ports:
+    - 80:80
+loggy:
+  image: sendgridlabs/loggly-docker
+  environment:
+    - TOKEN=dddaaa51-f410-4d6e-ae03-3a7fe250e561
+    - TAG=Docker
+
+
+web:
+  build: .
+  command: ./app_server.sh
+  volumes:
+    - :/root/code
+  ports:
+    - 8000:3000
+  environment:
+    - DJANGO_SETTINGS_MODULE=config.settings.development
+  links:
+    - loggy:loggy
