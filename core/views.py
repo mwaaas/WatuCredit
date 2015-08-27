@@ -29,7 +29,7 @@ class WatuCreditUssdSimulator(UssdSimulatorView):
     session_id = 'SESSIONID'
     input = 'input'
     language = 'LANGUAGE'
-    #login_required=False
+    login_required=False
 
     def response_handler(self, response):
         response_status = response.headers.get('Freeflow', 'FC')
