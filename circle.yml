@@ -7,11 +7,11 @@ dependencies:
     - sudo pip install awscli==1.3.24
   override:
     - docker info
-    - docker build -t mwaaas/django-sample-app:$CIRCLE_SHA1 .
+    - docker build -t mwaaas/watu:$CIRCLE_SHA1 .
 
 test:
   override:
-    - docker run mwaaas/django-sample-app:$CIRCLE_SHA1 python manage.py test
+    - docker run mwaaas/watu:$CIRCLE_SHA1 python manage.py test
 
 deployment:
   elasticbeanstalk:

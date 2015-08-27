@@ -7,14 +7,14 @@
   "containerDefinitions": [
     {
       "name": "web",
-      "image": "mwaaas/django-sample-app:<TAG>",
+      "image": "mwaaas/watu:<TAG>",
       "essential": true,
       "memory": 128,
       "command": ["./app_server.sh"],
         "portMappings": [
         {
           "hostPort": 80,
-          "containerPort": 80
+          "containerPort": 3000
         }
       ]
     }

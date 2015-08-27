@@ -4,7 +4,7 @@ SHA1=$1
 EB_BUCKET=elasticbeanstalk-eu-west-1-033845034954
 
 # Deploy image to Docker Hub
-docker push mwaaas/django-sample-app:$SHA1
+docker push mwaaas/watu:$SHA1
 
 # Create new Elastic Beanstalk version
 DOCKERRUN_FILE=$SHA1-Dockerrun.aws.json
