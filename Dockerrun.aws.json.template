@@ -26,12 +26,12 @@
       "essential": true,
       "memory": 128,
       "links": ["web"],
-      "portMappings": [
+      "portMappings":
         {
           "hostPort": 80,
           "containerPort": 80
         }
-      ],
+      ]
     },
     {
       "name": "web",
