@@ -1,5 +1,5 @@
 nginx:
-  build: devops/nginx_container
+  image: mwaaas/nginx:0.0.1
   links:
     - web:web
   volumes_from:
