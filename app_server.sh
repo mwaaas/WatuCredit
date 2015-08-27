@@ -8,6 +8,7 @@ python manage.py initadmin --username=admin --password=yz2rsMcaj3UJ3daRswBd --se
 #python manage.py runserver 0.0.0.0:3000
 
 exec  gunicorn --bind=0.0.0.0:3000 config.wsgi \
+        --workers=4\
         --settings=config.settings.base\
         --log-level=info \
         --log-syslog \
