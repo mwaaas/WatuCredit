@@ -21,6 +21,19 @@
       ]
     },
     {
+      "name": "nginx",
+      "image": "quay.io/jumo/sms_nginx:0.0.2",
+      "essential": true,
+      "memory": 128,
+      "links": ["web"],
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+    },
+    {
       "name": "web",
       "image": "mwaaas/watu:<TAG>",
       "essential": true,
@@ -31,7 +44,7 @@
       "command": ["./app_server.sh"],
         "portMappings": [
         {
-          "hostPort": 80,
+          "hostPort": 8000,
           "containerPort": 3000
         }
       ]
