@@ -5,6 +5,8 @@ python manage.py collectstatic --noinput
 
 python manage.py initadmin --username=admin --password=yz2rsMcaj3UJ3daRswBd --settings=$DJANGO_SETTINGS_MODULE
 
+#python manage.py runserver 0.0.0.0:3000
+
 exec  gunicorn --bind=0.0.0.0:3000 config.wsgi \
         --settings=config.settings.base\
         --log-level=info \
