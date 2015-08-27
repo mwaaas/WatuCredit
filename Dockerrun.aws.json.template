@@ -22,7 +22,7 @@
     },
     {
       "name": "nginx",
-      "image": "quay.io/jumo/sms_nginx:0.0.2",
+      "image": "mwaaas/nginx:0.0.1",
       "essential": true,
       "memory": 128,
       "links": ["web"],
