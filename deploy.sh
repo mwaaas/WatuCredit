@@ -14,4 +14,4 @@ aws elasticbeanstalk create-application-version --application-name watu_credit \
     --version-label $SHA1 --source-bundle S3Bucket=$EB_BUCKET,S3Key=$DOCKERRUN_FILE
 
 # Update Elastic Beanstalk environment to new version
-aws elasticbeanstalk update-environment --environment-name watuCredit-env --version-label $SHA1
+aws elasticbeanstalk update-environment --environment-name watu-credit-staging --version-label $SHA1
