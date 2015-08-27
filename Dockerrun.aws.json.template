@@ -5,10 +5,28 @@
     "Key": ".dockercfg"
   },
   "containerDefinitions": [
+  {
+      "name": "loggy",
+      "image": "sendgridlabs/loggly-docker",
+      "memory": 128,
+      "environment": [
+        {
+          "name": "TOKEN",
+          "value": "dddaaa51-f410-4d6e-ae03-3a7fe250e561"
+        },
+        {
+          "name":"TAG",
+          "value": "Docker"
+        }
+      ]
+    },
     {
       "name": "web",
       "image": "mwaaas/watu:<TAG>",
       "essential": true,
+      "links": [
+        "loggy"
+      ],
       "memory": 128,
       "command": ["./app_server.sh"],
         "portMappings": [
