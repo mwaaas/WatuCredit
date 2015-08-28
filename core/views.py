@@ -8,33 +8,40 @@ class WatuCreditUssd(UssdAppView):
     initial_level='1'
     initial_input='30'
 
-    def get(self, req):
-        return UssdRequest(req.GET['msisdn'],
-                       req.GET['SESSIONID'],
-                       req.GET['input'],
-                       )
+    def post(self, req):
+        return UssdRequest(
+            phone_number=req.POST['phoneNumber'].strip('+'),
+                       session_id=req.POST['sessionId'],
+                       input_=req.POST['text'],
+                       service_code=req.POST['serviceCode'],
+        )
 
     def ussd_response_handler(self, ussd_response):
-        response = HttpResponse(str(ussd_response))
-        response['Freeflow'] = 'FB'
+
+        ussd_text = '{status} {text}'
+
+        status = 'STOP'
         if ussd_response.status:
-            response['Freeflow'] = 'FC'
-        return response
+            status = 'CON'
+
+        ussd_text = ussd_text.format(status=status,
+                                     text=ussd_response.text)
+
+        return HttpResponse(ussd_text)
 
 
 class WatuCreditUssdSimulator(UssdSimulatorView):
     ussd_view = WatuCreditUssd
     ussd_view_url_name = 'watu_ussd'
-    phoneNumber = 'msisdn'
-    session_id = 'SESSIONID'
-    input = 'input'
+    phoneNumber = 'phoneNumber'
+    session_id = 'sessionId'
+    input = 'text'
     language = 'LANGUAGE'
     login_required=False
 
     def response_handler(self, response):
-        response_status = response.headers.get('Freeflow', 'FC')
-        response_message = response.content
+        response_status, response_message = response.content.split(' ', 1)
 
-        if response_status == 'FB':
+        if response_status == 'STOP':
             return False, response_message
         return True, response_message
