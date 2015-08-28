@@ -10,29 +10,58 @@ class Welcome(Menu):
     prompt = "Welcome to Watu Credit\n"
 
     options = (
-        MenuOption("sign up", "EnterName"),
+        MenuOption("Take a loan", "LoanChoices"),
+        MenuOption("Repay Loan", "RepayLoan"),
+        MenuOption("About Us", "AboutUs")
     )
 
 
-class EnterName(Input):
+class LoanChoices(List):
 
-    next_handler = "EnterAge"
+    prompt = "You are qualified in the following loans:\n"
 
-    prompt = "Enter your name\n"
+    items = (
+        ListItem("Ksh 300", 300),
+        ListItem("Ksh 200", 200),
+        ListItem("Ksh 100", 100),
+    )
 
-    session_key = "name"
+    options = (
+        MenuOption("Back", "Welcome"),
+    )
 
-class EnterAge(Input):
+    items_per_page = 5
 
-    next_handler = 'ThankYou'
+    session_key = "amount"
 
-    prompt = "Enter your age\n"
+    next_handler = "LoanSubmission"
 
-    session_key = "age"
 
-class ThankYou(Quit):
+class LoanSubmission(Quit):
 
     def get_message(self, req):
-        return "Thank you for registering your name is {0} age {1}".format(
-            req.session["name"], req.session['age']
+        return "We will process your loan of {} and " \
+               "send you a text".format(req.session['amount'])
+
+class RepayLoan(Input):
+
+    prompt = "Enter amount you want to pay"
+
+    session_key = "repay_amount"
+
+    next_handler = "RepaySubmission"
+
+class RepaySubmission(Quit):
+
+    def get_message(self, req):
+        return "Ksh {0} will be deducted in your mpesa account".format(
+            req.session['repay_amount']
         )
+
+class AboutUs(Menu):
+
+    options = (
+        MenuOption("Back", "Welcome"),
+    )
+
+    prompt = "Watu credit is an organisation that offers micro credits\n"
